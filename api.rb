@@ -8,6 +8,7 @@ module Web
                 # Developer verification
                 get "verification" do
                         content_type "text/plain"
+                        puts params[:signature]
                         Verification.new.verify(params[:timestamp], params[:nonce], params[:echostr], params[:signature])
                 end
 

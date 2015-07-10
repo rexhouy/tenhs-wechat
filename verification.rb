@@ -1,4 +1,7 @@
 require "digest/sha1"
+require 'erb'
+require 'yaml'
+
 class Verification
 
         def initialize
@@ -7,12 +10,12 @@ class Verification
         end
 
         def verify(timestamp, nonce, echostr, signature)
-                return echostr if check_signature({timestamp: timestamp, nonce: nonce, token: @@token}, signature)
+                return echostr if check_signature([timestamp, nonce, @@token], signature)
                 ""
         end
 
         def sign(params)
-                str = params.sort.reduce("") do | memo, (k, v) |
+                str = params.sort.reduce("") do | memo, v |
                         memo << v
                 end
                 Digest::SHA1.hexdigest(str)
@@ -22,7 +25,7 @@ class Verification
 
         # Use signature to verify if the params are correct.
         def check_signature(params, signature)
-                str = params.sort.reduce("") do | memo, (k, v) |
+                str = params.sort.reduce("") do | memo, v |
                         memo << v
                 end
                 Digest::SHA1.hexdigest(str).eql? signature
