@@ -1,15 +1,32 @@
 # -*- coding: utf-8 -*-
 require "grape"
-require "./verification"
+require "./app/controllers/verification_controller"
+require "./app/controllers/access_token_controller"
+require "./config/application"
+
+Application.new
 
 module Web
+
         class API < Grape::API
+
+                default_format :json
 
                 # Developer verification
                 get "verification" do
                         content_type "text/plain"
-                        puts params[:signature]
                         Verification.new.verify(params[:timestamp], params[:nonce], params[:echostr], params[:signature])
+                end
+
+                # Access access token
+                resource :access_token do
+                        content_type :json, "application/json"
+                        get do
+                                AccessTokenController.new.get
+                        end
+                        post do
+                                AccessTokenController.new.update
+                        end
                 end
 
                 # rescue from errors

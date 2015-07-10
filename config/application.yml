@@ -1,1 +1,7 @@
 token: <%= ENV["WECHAT_TOKEN"] %>
+appid: <%= ENV["WECHAT_APP_ID"]%>
+appsecret: <%= ENV["WECHAT_APP_SECRET"]%>
+access_token:
+  host: "api.weixin.qq.com"
+  port: "443"
+  path: "/cgi-bin/token?grant_type=client_credential&appid=<%= ENV['WECHAT_APP_ID'] %>&secret=<%= ENV['WECHAT_APP_SECRET'] %>"

@@ -1,2 +1,2 @@
-require "./api"
+require "./app/api"
 run Web::API

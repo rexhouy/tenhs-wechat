@@ -1,16 +1,12 @@
 require "digest/sha1"
 require 'erb'
 require 'yaml'
+require "./app/config"
 
 class Verification
 
-        def initialize
-                @@config ||= YAML.load((ERB.new File.new("config/application.yml").read).result)
-                @@token = @@config["token"]
-        end
-
         def verify(timestamp, nonce, echostr, signature)
-                return echostr if check_signature([timestamp, nonce, @@token], signature)
+                return echostr if check_signature([timestamp, nonce, Config::APP["token"]], signature)
                 ""
         end
 

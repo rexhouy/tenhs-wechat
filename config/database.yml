@@ -1,0 +1,7 @@
+adapter: mysql2
+encoding: utf8
+pool: 5
+database: wechat
+username: wechat
+password: <%= ENV["WECHAT_PASSWORD"] %>
+socket: /var/run/mysqld/mysqld.sock
